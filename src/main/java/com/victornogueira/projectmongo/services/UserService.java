@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.victornogueira.projectmongo.domain.User;
+import com.victornogueira.projectmongo.dto.UserDto;
 import com.victornogueira.projectmongo.respositories.UserRepository;
 import com.victornogueira.projectmongo.services.exception.ObjectNotFoundException;
 
@@ -26,6 +27,16 @@ public class UserService {
 	public User findById(String id) {
 	
 		return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
+	}
+	
+	public User insertUser(User user) {
+		
+		return userRepository.insert(user);
+		
+	}
+	
+	public User fromDto(UserDto userDto) {
+		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
 	}
 	
 }
