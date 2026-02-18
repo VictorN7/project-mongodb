@@ -12,7 +12,7 @@ public class UserDto implements Serializable{
 	private String id;
 	private String name;
 	
-	@JsonIgnore
+	
 	private String email;
 	
 	public UserDto() {
