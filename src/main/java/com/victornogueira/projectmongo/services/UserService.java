@@ -45,7 +45,6 @@ public class UserService {
 		
 		return userRepository.save(user);
 	}
-
 	
 // Esse método seria para atualização dos dados, mas como no momento a lógica é simples, optei por deixar no update()
 	
