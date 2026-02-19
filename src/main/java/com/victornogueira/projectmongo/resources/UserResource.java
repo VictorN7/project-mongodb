@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.victornogueira.projectmongo.domain.User;
-import com.victornogueira.projectmongo.dto.UserDto;
+import com.victornogueira.projectmongo.dto.UserDTO;
 import com.victornogueira.projectmongo.services.UserService;
 
 @RestController
@@ -29,22 +29,22 @@ public class UserResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<UserDto>> findAll(){
-		return ResponseEntity.ok().body(userService.findAll().stream().map(x -> new UserDto(x)).collect(Collectors.toList()));
+	public ResponseEntity<List<UserDTO>> findAll(){
+		return ResponseEntity.ok().body(userService.findAll().stream().map(x -> new UserDTO(x)).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDto> findById(@PathVariable String id) {
-		return ResponseEntity.ok().body(new UserDto(userService.findById(id)));
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+		return ResponseEntity.ok().body(new UserDTO(userService.findById(id)));
 	}
 
 	@PostMapping
-	public ResponseEntity<UserDto> insert(@RequestBody UserDto userDto){
+	public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDto){
 		
 		User user = userService.fromDto(userDto);
 		user = userService.insertUser(user);
 		
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri()).body(new UserDto(user));
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri()).body(new UserDTO(user));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -54,7 +54,7 @@ public class UserResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDto> update(@PathVariable String id,@RequestBody UserDto userDto){
-		return ResponseEntity.ok().body(new UserDto(userService.update(id,userDto)));
+	public ResponseEntity<UserDTO> update(@PathVariable String id,@RequestBody UserDTO userDto){
+		return ResponseEntity.ok().body(new UserDTO(userService.update(id,userDto)));
 	}
 }

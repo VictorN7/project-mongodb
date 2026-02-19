@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class UserDto implements Serializable{
+public class UserDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -17,10 +17,10 @@ public class UserDto implements Serializable{
 	private String name;
 	private String email;
 	
-	public UserDto() {
+	public UserDTO() {
 	}
 
-	public UserDto(User user) {
+	public UserDTO(User user) {
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();

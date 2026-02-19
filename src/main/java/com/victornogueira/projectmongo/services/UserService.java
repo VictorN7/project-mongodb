@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.victornogueira.projectmongo.domain.User;
-import com.victornogueira.projectmongo.dto.UserDto;
+import com.victornogueira.projectmongo.dto.UserDTO;
 import com.victornogueira.projectmongo.respositories.UserRepository;
 import com.victornogueira.projectmongo.services.exception.ObjectNotFoundException;
 
@@ -36,7 +36,7 @@ public class UserService {
 		userRepository.delete(user);
 	}
 	
-	public User update(String id, UserDto userDto) {
+	public User update(String id, UserDTO userDto) {
 
 		User user = findById(id);
 		//updateData(userData, user);
@@ -54,7 +54,7 @@ public class UserService {
 //		userData.updateEmail(user.getEmail());
 //	}
 	
-	public User fromDto(UserDto userDto) {
+	public User fromDto(UserDTO userDto) {
 		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
 	}
 }
