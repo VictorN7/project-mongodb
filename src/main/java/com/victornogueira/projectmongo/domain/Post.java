@@ -9,7 +9,6 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.victornogueira.projectmongo.dto.AuthorDTO;
 
 @Document("posts")
@@ -25,11 +24,9 @@ public class Post implements Serializable{
 	
 	private AuthorDTO author;
 
-	
-	//private List<Comment> comments = new ArrayList<>();
+	private List<Comment> comments = new ArrayList<>();
 	
 	public Post() {
-		
 	}
 	
 	public Post(String id, Date date, String title, String body, AuthorDTO author) {
@@ -80,13 +77,13 @@ public class Post implements Serializable{
 		this.author = author;
 	}
 
-//	public List<Comment> getComments() {
-//		return comments;
-//	}
-//
-//	public void setComments(List<Comment> comments) {
-//		this.comments = comments;
-//	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
 	@Override
 	public int hashCode() {
