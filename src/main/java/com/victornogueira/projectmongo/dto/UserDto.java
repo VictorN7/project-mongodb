@@ -1,7 +1,10 @@
 package com.victornogueira.projectmongo.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.victornogueira.projectmongo.domain.Post;
 import com.victornogueira.projectmongo.domain.User;
 
 import lombok.Getter;
@@ -17,6 +20,8 @@ public class UserDTO implements Serializable{
 	private String name;
 	private String email;
 	
+	List<String> posts = new ArrayList<>();
+	
 	public UserDTO() {
 	}
 
@@ -24,5 +29,8 @@ public class UserDTO implements Serializable{
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();
+		posts = user.getPosts()
+				.stream()
+				.map(Post::getId).toList();
 	}
 }

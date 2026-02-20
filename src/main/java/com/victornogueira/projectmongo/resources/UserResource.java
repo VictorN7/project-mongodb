@@ -40,7 +40,7 @@ public class UserResource {
 	}
 
 	@GetMapping("/{id}/posts")
-	public ResponseEntity<List<Post>> findPostsById(@PathVariable String id){
+	public ResponseEntity<List<Post>> findPostsByUser(@PathVariable String id){
 		
 		User user = userService.findById(id);
 		
