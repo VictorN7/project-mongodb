@@ -2,15 +2,16 @@ package com.victornogueira.projectmongo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.victornogueira.projectmongo.dto.AuthorDTO;
+import com.victornogueira.projectmongo.dto.CommentDTO;
 
 @Document("posts")
 public class Post implements Serializable{
@@ -25,8 +26,7 @@ public class Post implements Serializable{
 	
 	private AuthorDTO author;
 
-	@DBRef(lazy = true)
-	private List<Comment> comments = new ArrayList<>();
+	private List<CommentDTO> comments = new ArrayList<>();
 	
 	public Post() {
 	}
@@ -79,14 +79,14 @@ public class Post implements Serializable{
 		this.author = author;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
+	public List<CommentDTO> getComments() {
+		return Collections.unmodifiableList(comments);
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	public void addComments(CommentDTO comment){
+		comments.add(comment);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
