@@ -1,5 +1,6 @@
 package com.victornogueira.projectmongo.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.victornogueira.projectmongo.domain.Post;
+import com.victornogueira.projectmongo.resources.util.URL;
 import com.victornogueira.projectmongo.services.PostService;
 
 @RestController
@@ -30,5 +32,15 @@ public class PostResource {
 	@GetMapping("/titlesearch")
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "txt", defaultValue = "") String title){
 		return ResponseEntity.ok().body(postService.findByTitle(title));
+	}
+	
+	@GetMapping("/fullsearch")
+	public ResponseEntity<List<Post>> fullSearch(@RequestParam(value = "txt", defaultValue = "") String title,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate, 
+			@RequestParam(value = "maxDate", defaultValue = "")String maxDate){
+		
+		return ResponseEntity.ok().body(postService.fullSearch(URL.decodeParam(title), 
+				URL.convertDate(minDate, new Date(0L)) ,
+				URL.convertDate(maxDate, new Date())));
 	}
 }
