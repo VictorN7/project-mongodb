@@ -20,7 +20,7 @@ import com.victornogueira.projectmongo.dto.UserDTO;
 import com.victornogueira.projectmongo.services.UserService;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/v1/users")
 public class UserResource {
 	
 	private UserService userService;

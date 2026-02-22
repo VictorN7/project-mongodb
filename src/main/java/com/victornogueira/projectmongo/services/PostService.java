@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.victornogueira.projectmongo.domain.Post;
 import com.victornogueira.projectmongo.respositories.PostRepository;
 import com.victornogueira.projectmongo.services.exception.ObjectNotFoundException;
-import com.victornogueira.projectmongo.resources.util.URL;
 
 @Service
 public class PostService {
@@ -24,7 +23,7 @@ public class PostService {
 	}
 
 	public List<Post> findByTitle(String title) {
-		return postRepository.searchTitle(URL.decodeParam(title));
+		return postRepository.searchTitle(title);
 	}
 
 	public List<Post> fullSearch(String title, Date minDate, Date maxDate) {

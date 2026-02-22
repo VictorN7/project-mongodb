@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.victornogueira.projectmongo.dto.AuthorDTO;
@@ -21,6 +22,8 @@ public class Post implements Serializable{
 	@Id
 	private String id;
 	private Date date;
+	
+	@Indexed
 	private String title;
 	private String body;
 	

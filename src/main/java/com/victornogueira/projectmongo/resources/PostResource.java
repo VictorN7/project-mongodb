@@ -15,7 +15,7 @@ import com.victornogueira.projectmongo.resources.util.URL;
 import com.victornogueira.projectmongo.services.PostService;
 
 @RestController
-@RequestMapping(value = "/posts")
+@RequestMapping(value = "/api/v1/posts")
 public class PostResource {
 	
 	private PostService postService;
@@ -31,7 +31,7 @@ public class PostResource {
 	
 	@GetMapping("/titlesearch")
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "txt", defaultValue = "") String title){
-		return ResponseEntity.ok().body(postService.findByTitle(title));
+		return ResponseEntity.ok().body(postService.findByTitle(URL.decodeParam(title)));
 	}
 	
 	@GetMapping("/fullsearch")

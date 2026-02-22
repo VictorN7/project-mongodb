@@ -49,14 +49,14 @@ public class User implements Serializable {
 	}
 
 	public void updateName(String name) {
-		if (name.equals(this.name)) {
+		if (Objects.equals(name, this.name)) {
 			return;
 		}
 		this.name = name;
 	}
 
 	public void updateEmail(String email) {
-		if (email.equals(this.email)) {
+		if (Objects.equals(email, this.email)) {
 			return;
 		}
 		this.email = email;
