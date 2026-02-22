@@ -24,7 +24,7 @@ public class PostService {
 	
 	public List<Post> findByTitle(String title) {
 		
-		List<Post> list = postRepository.findByTitleContainingIgnoreCase(URL.decodeParam(title));
+		List<Post> list = postRepository.searchTitle(URL.decodeParam(title));
 		return list;
 	}
 }
