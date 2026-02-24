@@ -43,7 +43,6 @@ public class UserResource {
 	public ResponseEntity<List<Post>> findPostsByUser(@PathVariable String id){
 		
 		User user = userService.findById(id);
-		
 		return ResponseEntity.ok().body(user.getPosts());
 	}
 	
@@ -52,7 +51,6 @@ public class UserResource {
 		
 		User user = userService.fromDto(userDto);
 		user = userService.insertUser(user);
-		
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri()).body(new UserDTO(user));
 	}
 	
