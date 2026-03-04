@@ -1,11 +1,10 @@
-# 📌 API REST com Spring Boot + MongoDB
+# 📌 REST API with Spring Boot + MongoDB
 
-Projeto desenvolvido como estudo prático para aprofundar modelagem NoSQL e construção de APIs REST escaláveis com Spring Boot.
+Backend REST API built with Spring Boot and MongoDB, focused on NoSQL modeling and scalable API design.
 
-O objetivo deste projeto foi revisar conceitos de modelagem em MongoDB, aplicação de DTOs, queries personalizadas e organização em camadas seguindo boas práticas de arquitetura backend.
+The main goal of this project was to consolidate MongoDB modeling concepts, DTO usage, custom queries, and layered architecture while following backend best practices.
 
-
-## 🚀 Tecnologias Utilizadas
+## 🚀 Technologies Used
 
 - Java 21
 - Spring Boot
@@ -13,55 +12,66 @@ O objetivo deste projeto foi revisar conceitos de modelagem em MongoDB, aplicaç
 - MongoDB
 - Lombok
 - Maven
-- Postman e HTTPie terminal
+- Postman & HTTPie (terminal)
 - RESTful API
-- ControllerAdvice (tratamento global de exceções)
+- ControllerAdvice (global exception handling)
 
-## 🏗️ Arquitetura do Projeto
+## 🏗️ Project Architecture
 
-**O projeto segue organização em camadas:**
+**The project follows a layered architecture:**
 
 ```txt
-domain        → Entidades do sistema
-dto           → Objetos de transferência de dados
-repository    → Acesso ao banco (MongoRepository)
-service       → Regras de negócio
-resources     → Camada REST (Controllers)
-exception     → Tratamento global de erros
-config        → Instanciação inicial de dados
+domain        → System entities
+dto           → Data Transfer Objects
+repository    → Database access layer (MongoRepository)
+service       → Business logic layer
+resources     → REST layer (Controllers)
+exception     → Global error handling
+config        → Initial data instantiation
 ```
 
-## 🧩 Diagrama
+## 🧩 Architecture Diagram
 
 ```
 Client → Controller → Service → Repository → MongoDB
 ```
 
-## 🧠 Modelagem NoSQL
+## 🧠 NoSQL Modeling
 
-**A modelagem foi pensada considerando boas práticas do MongoDB:**
+**The data modeling was designed following MongoDB best practices:**
 
 ### 📌 Post
 
-- Contém dados do autor (embedado via AuthorDTO)
-- Contém lista de comentários (embedado via CommentDTO)
-- Utilização de `@Indexed` para otimização de consultas por campos frequentemente buscados.
+- Contains embedded author data (AuthorDTO)
+- Contains embedded comments list (CommentDTO)
+- Uses `@Indexed` to optimize frequently searched fields
 
 ### 📌 User
 
-- Mantém referência aos posts via @DBRef
-- Utiliza encapsulamento para proteger a lista de posts
+- Maintains references to posts using `@DBRef` annotation
+- Uses encapsulation to protect the posts list
 
-## 🔍 Funcionalidades Implementadas
 
-### 👤 Usuários
+## 🖥️ Running Application
 
-- Criar usuário
-- Listar todos os usuários
-- Buscar usuário por ID
-- Atualizar usuário
-- Remover usuário
-- Listar posts de um usuário
+- Spring Boot backend running
+- MongoDB database integrated
+- REST requests executed via HTTPie and Postman
+- HTTP logs confirming 200 OK responses
+
+<img width="1919" height="1027" alt="Mongo - MongoSpring" src="https://github.com/user-attachments/assets/a6a18321-f179-4ce3-86ad-ac9047c7cdfc" />
+
+
+## 🔍 Implemented Features
+
+### 👤 Users
+
+- Create user
+- List all users
+- Find user by ID
+- Update user
+- Delete user
+- List posts from a specific user
 
 **Endpoints:**
 
@@ -74,11 +84,17 @@ PUT    /api/v1/users/{id}
 DELETE /api/v1/users/{id}
 ```
 
-## 📄 Exemplo de Documento Post
+## 📄 Post Document Example
 
-Busca de posts por usuário:
+### 🔎 Fetch posts by user
 
-**GET -** `http://localhost:8080/api/v1/users/699b5ec2b6a8fc7b1d0359f5/posts`
+**Request**
+
+GET `/api/v1/users/{id}/posts`
+
+Example:
+
+GET `http://localhost:8080/api/v1/users/699b5ec2b6a8fc7b1d0359f5/posts`
 
 ```
 [
@@ -115,12 +131,13 @@ Busca de posts por usuário:
 
 ## 📝 Posts
 
-- Buscar post por ID
-- Buscar por título (case insensitive)
-- Busca completa com:
-  - Texto (title, body, comments)
-  - Intervalo de datas
-  - Combinação de `$and` + `$or`
+- Find post by ID
+- Search by title (case insensitive)
+- Full search with:
+    - Text (title, body, comments)
+    - Date range
+    - Combination of `$and` + `$or` operators
+
 
 **Endpoints:**
 ```txt 
@@ -129,22 +146,25 @@ GET /api/v1/posts/titlesearch?txt=texto
 GET /api/v1/posts/fullsearch?txt=texto&minDate=yyyy-MM-dd&maxDate=yyyy-MM-dd
 ```
 
-## 🔎 Busca Avançada (Full Search)
+## 🔎 Advanced Search (Full Search)
 
-**Implementação utilizando @Query personalizada do MongoDB:**
+**Implemented using a custom @Query with MongoDB:**
 
-- Regex case insensitive
-- Filtro por data mínima e máxima
-- Busca dentro de campos embedados (comments.text)
-- Combinação de $and + $or
+- Case-insensitive regex  
+- Minimum and maximum date filtering  
+- Search inside embedded fields (comments.text)  
+- Combination of `$and` and `$or` operators  
 
-**Exemplo de chamada:**
+**Example request:**
+
 ```txt
 GET /api/v1/posts/fullsearch?txt=data&minDate=2026-02-01&maxDate=2026-02-28
 ```
-Essa chamada realiza uma busca textual pelo termo "data" nos campos `title`, `body` e `comments.text`, filtrando os resultados dentro do intervalo informado entre `minDate` e `maxDate`, utilizando combinação de operadores `$and` e `$or` no MongoDB.
 
-**Exemplo de retorno da chamada:**
+This request performs a text search for the term "data" in the fields `title`, `body`, and `comments.text`, filtering results within the provided date range using MongoDB logical operators.
+
+
+**Example response:**
 
 ```
 [
@@ -191,11 +211,12 @@ Essa chamada realiza uma busca textual pelo termo "data" nos campos `title`, `bo
 ]
 ```
 
-## 🛡️ Tratamento de Exceções
+## 🛡️ Exception Handling
 
-O projeto utiliza @ControllerAdvice para tratamento global.
+The project uses `ControllerAdvice` for global exception handling.
 
-**Exemplo de resposta de erro:**
+**Example error response:**
+
 
 ```json
 {
@@ -207,79 +228,82 @@ O projeto utiliza @ControllerAdvice para tratamento global.
 }
 ```
 
-## 🧪 Testando a API
+## 🧪 Testing the API
 
-A API pode ser testada utilizando:
+The API can be tested using:
 
 - Postman
-- HTTPie (via terminal)
+- HTTPie (terminal)
 
-Exemplo via HTTPie terminal:
+Example via HTTPie:
 
 ```bash
 $ http GET :8080/api/v1/users/699b5ec2b6a8fc7b1d0359f6/posts
 ```
 
 
-## 📊 Conceitos Aplicados
+## 📊 Applied Concepts
 
-- Modelagem híbrida (embed + referência)
-- DTO Pattern para controle de payload
-- Encapsulamento com Collections.unmodifiableList
-- Regex no MongoDB
-- Indexação com @Indexed
-- Versionamento de API (/api/v1)
-- Uso correto de Status HTTP
-- ResponseEntity
-- Stream API
-- Organização em camadas
+- Hybrid modeling (embedded + reference)
+- DTO Pattern for payload control
+- Encapsulation with `Collections.unmodifiableList`
+- MongoDB regex queries
+- Indexing with `@Indexed`
+- API versioning (`/api/v1`)
+- Proper HTTP status usage
+- `ResponseEntity`
+- Java Stream API
+- Layered architecture organization
 
-## ▶️ Como Executar o Projeto
 
-### 1️⃣ Clonar o repositório
+## ▶️ How to Run the Project
+
+### 1️⃣ Clone the repository
+
 ```
-git clone https://github.com/seu-usuario/seu-repo.git
+git clone https://github.com/VictorN7/project-mongodb.git
 ```
 
-### 2️⃣ Configurar MongoDB
+### 2️⃣ Configure MongoDB
 
-**Certifique-se de que o MongoDB esteja rodando localmente na porta padrão:**
+**Make sure MongoDB is running locally on the default port:**
+
 ```
 mongodb://localhost:27017
 ```
 
-### 3️⃣ Executar aplicação
+### 3️⃣ Run the application
 
 ```
 ./mvnw spring-boot:run
 ```
 
-Ou execute pela sua IDE.
+Or run directly from your IDE.
 
-## 📌 Dados Iniciais
+## 📌 Initial Data
 
-O projeto utiliza CommandLineRunner para popular o banco automaticamente ao iniciar.
+The project uses `CommandLineRunner` to automatically populate the database at startup.
 
-Usuários, posts e comentários são criados automaticamente.
+Users, posts, and comments are generated automatically.
 
-## 🎯 Sobre o Projeto
+## 🎯 About the Project
 
-Este projeto demonstra:
+This project demonstrates:
 
-- Modelagem eficiente em banco NoSQL
-- Construção de API REST seguindo boas práticas
-- Separação de responsabilidades em camadas
-- Implementação de buscas avançadas com MongoDB
+- Efficient NoSQL database modeling
+- REST API construction following best practices
+- Clear separation of responsibilities using layered architecture
+- Advanced querying techniques with MongoDB
 
-## 🚀 Próximas Evoluções (Possíveis Melhorias)
+## 🚀 Possible Future Improvements
 
-- Implementar paginação
-- Adicionar validações com Bean Validation
-- Adicionar testes unitários
-- Dockerizar aplicação
-- Implementar Swagger/OpenAPI
+- Implement pagination
+- Add Bean Validation
+- Add unit tests
+- Dockerize the application
+- Integrate Swagger / OpenAPI
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 Victor Hugo Nogueira Santos
 Backend Developer
